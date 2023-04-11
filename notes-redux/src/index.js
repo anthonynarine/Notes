@@ -8,6 +8,7 @@ import NoteList from "./pages/NoteBrowse";
 import Note from "./pages/Note";
 import NoteCreate from "./pages/NoteCreate";
 import ErrorPage from "./pages/ErrorPage";
+import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,10 +16,13 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-        <Route path="/" element={<NoteList />} />
-        <Route path="/note/:id" element={<Note />} />
-        <Route path="/note/add" element={<NoteCreate />} />
-        <Route path="*" element={<ErrorPage />} />
+{/* app component will wrap all other routes here */}
+          <Route path="/" element={<App />}>
+            <Route path="/" element={<NoteList />} />
+            <Route path="/note/:id" element={<Note />} />
+            <Route path="/note/add" element={<NoteCreate />} />
+            <Route path="*" element={<ErrorPage />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </Provider>
