@@ -4,11 +4,11 @@ import App from "./App";
 import { store } from "./store/configureStore";
 import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NoteList from "./pages/NoteBrowse";
 import Note from "./pages/Note";
 import NoteCreate from "./pages/NoteCreate";
 import ErrorPage from "./pages/ErrorPage";
 import "./index.css";
+import NoteBrowse from "./pages/NoteBrowse";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -18,7 +18,7 @@ root.render(
         <Routes>
 {/* app component will wrap all other routes here */}
           <Route path="/" element={<App />}>
-            <Route path="/" element={<NoteList />} />
+            <Route path="/" element={<NoteBrowse />} />
             <Route path="/note/:id" element={<Note />} />
             <Route path="/note/add" element={<NoteCreate />} />
             <Route path="*" element={<ErrorPage />} />

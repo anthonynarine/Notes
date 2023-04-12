@@ -25,6 +25,6 @@ export class NoteAPI {
     }
 
     static async updateById(note){
-        return await (axios.patch(`${BASE_URL}/${noteId}`, note)).data;
+        return await (axios.patch(`${BASE_URL}/${note.id}`, note)).data;
     }
 };

@@ -1,13 +1,13 @@
-import React from 'react'
+import React from "react";
+import NoteCard from "../components/NoteCard";
+import NoteList from "../container/NoteList";
 
-function NoteList() {
+function NoteBrowse() {
   return (
     <div>
-
-        NoteBrowse will display all notes and search bar
-      
+      <NoteList />
     </div>
-  )
+  );
 }
 
-export default NoteList
+export default NoteBrowse;

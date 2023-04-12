@@ -9,7 +9,6 @@ import axios from "axios";
 function App() {
   const dispatch = useDispatch()
 
-
   //THIS  SETUP UTILIZED THE API SETUP IN ./api/note-api
   // useEffect(() => {
   //   async function fetchAllNotes(){
@@ -35,7 +34,7 @@ function App() {
       };
     }
     fetchAllNotes();
-  });
+  }, []);
 
 
   return (
@@ -43,9 +42,8 @@ function App() {
       <Header />
       <Outlet/>
 {/* since children routes have been passed to app (see index.js) 
-to tell react to render these children Outlet that comes with 
-react-router tell react to render app with a child route ex http://localhost:3000/notes/add/ */}
-  app here
+to tell react to render these children Outlet (comes with 
+react-router) tells react to render app with a child route eg http://localhost:3000/notes/add/ */}
     </div>
   );
 }
