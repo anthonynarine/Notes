@@ -14,6 +14,7 @@ let StyledToolbar = styled(Toolbar)({
   display: "flex",
   justifyContent: "space-between",
   height: "30px",
+ 
 });
 
 let Icons = styled(Box)(({ theme }) => ({
@@ -27,7 +28,7 @@ function Header() {
   let navigate = useNavigate();
 
   return (
-    <AppBar sx={{ margin: 0, backgroundColor:"lightblue" }} position="sticky">
+    <AppBar sx={{ margin: 0, backgroundColor:"lightblue", }} position="sticky">
       <StyledToolbar>
         <Typography
           onClick={() => navigate("/")}

@@ -8,10 +8,10 @@ function NoteList(props) {
   const noteList = useSelector((store) => store.noteSlice.noteList);
 
   return (
-    <Container>
-      <Grid container spacing={3}>
+    <Container justifyContent="center" >
+      <Grid marginTop={3} container spacing={2} justifyContent="space-between" >
         {noteList.map((note) => (
-          <Grid item key={note.id} xs={12} md={6} lg={4}>
+          <Grid item key={note.id} xs={6} md={6} lg={4}>
             <NoteCard title={note.title} body={note.body} date={note.created} />
           </Grid>
         ))}
