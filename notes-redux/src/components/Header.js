@@ -28,7 +28,7 @@ function Header() {
   let navigate = useNavigate();
 
   return (
-    <AppBar sx={{ margin: 0, backgroundColor:"lightblue", }} position="sticky">
+    <AppBar sx={{ margin: 0, backgroundColor:"#D66C16", }} position="sticky">
       <StyledToolbar>
         <Typography
           onClick={() => navigate("/")}
