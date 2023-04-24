@@ -9,6 +9,8 @@ import {
 } from "@mui/material";
 import { Create, Delete } from "@mui/icons-material";
 import { useState } from "react";
+import { ValidatorService } from "../../services/validator";
+import { FieldError } from "../FieldError/fieldError";
 
 const pageStyles = {
   btn: {
@@ -23,16 +25,49 @@ const pageStyles = {
   },
 };
 
+const VALIDATOR = {
+  title: (value) => {
+    return ValidatorService.min(value, 3) || ValidatorService.max(value, 20);
+  },
+  body: (value) => {
+    return ValidatorService.min(value, 3);
+  },
+};
+
+// VALIDATOR testing
+// console.log(VALIDATOR.title("he")) //testing VALIDATOR min
+// console.log(VALIDATOR.title("helloooooooooooooooooooooo")) //testing VALIDATOR max
+
 function NoteForm({ title, onClickEdit, onClickDelete, onSubmit }) {
-  //state to hold form values
+  //state to hold form value state
   const [formValues, setFormValues] = useState({ title: "", body: "" });
 
+  //state to hold errors
+  const [formErrors, setFormErrors] = useState({
+    title: undefined,
+    body: undefined,
+  });
+
   const updateFormValues = (event) => {
-    const id = event.target.id;
-    const value = event.target.value;
+    const id = event.target.id; //targets the id which is our sate
+    const value = event.target.value; // targets the state value of that id
     // spreading the note content is needed here or it will remove all other content if edited
-    setFormValues({...formValues, [id]: value });
+    setFormValues({ ...formValues, [id]: value });
+    validate(id, value);
   };
+
+  const validate = (id, value) => {
+    setFormErrors({ ...formErrors, [id]: VALIDATOR[id](value) });
+  };
+
+  const hasError = () => {
+    for (const id in formErrors){
+      if(formErrors[id]){
+        return true
+      }
+    }
+    return false
+  }
 
   const actionIcons = (
     <>
@@ -43,20 +78,24 @@ function NoteForm({ title, onClickEdit, onClickDelete, onSubmit }) {
   );
 
   const titleInput = (
-    <>
+    <div>
       <TextField
-      // onChange to update input values
+        // onChange to update input values
         onChange={updateFormValues}
         color="warning"
         id="title"
         label="Title"
         variant="outlined"
       />
-    </>
+      <div>
+        <FieldError message={formErrors.title} />
+      </div>
+    </div>
   );
   const contentInput = (
-    <>
+    <div>
       <TextField
+        // onChange to update input values
         onChange={updateFormValues}
         multiline
         color="warning"
@@ -66,14 +105,22 @@ function NoteForm({ title, onClickEdit, onClickDelete, onSubmit }) {
         label="Body"
         variant="outlined"
       />
-    </>
+      <div>
+        <FieldError message={formErrors.body} />
+      </div>
+    </div>
   );
 
   const submitBtn = (
     <>
-      <Button onClick={()=>onSubmit(formValues)} sx={pageStyles.btn}>Submit</Button>
+      <Button disabled={hasError()} onClick={() => onSubmit(formValues)} sx={pageStyles.btn}>
+        Submit
+      </Button>
     </>
   );
+
+
+
 
   return (
     <Container>
@@ -99,7 +146,7 @@ function NoteForm({ title, onClickEdit, onClickDelete, onSubmit }) {
         </Grid>
         <form>
           <Grid
-            xs={12}
+            xs={6}
             item
             alignItems="start"
             marginLeft="50px"
