@@ -17,6 +17,7 @@ function NoteList(props) {
           <Grid onClick={()=>navigate(`/note/${note.id}`)} item key={note.id} xs={6} md={6} lg={4} xl={3}>
             <NoteCard
               title={note.title}
+              created={note.created}
               body={note.body}    
             />
           </Grid>

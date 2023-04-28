@@ -21,6 +21,8 @@ let Icons = styled(Box)(({ theme }) => ({
   display: "flex",
   gap: "2px",
   alignItems: "center",
+  color: "#D8CCBD"
+
   //   backgroundColor: "white",
 }));
 
@@ -28,7 +30,7 @@ function Header() {
   let navigate = useNavigate();
 
   return (
-    <AppBar sx={{ margin: 0, backgroundColor:"#D66C16", }} position="sticky">
+    <AppBar sx={{ margin: 0, backgroundColor:"#274C43", }} position="sticky">
       <StyledToolbar>
         <Typography
           onClick={() => navigate("/")}

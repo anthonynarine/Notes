@@ -9,34 +9,46 @@ import {
   CardHeader,
   CardActionArea,
 } from "@mui/material";
-import { DeleteOutlined, Height } from "@mui/icons-material";
+import { DeleteOutlined } from "@mui/icons-material";
 import styled from "@emotion/styled";
-import { useNavigate } from "react-router-dom";
+import moment from "moment";
+
 
 let IconButtonSx = styled(IconButton)({
-  color: "gray",
+  color: "#623745",
   "&:hover": {
     color: "red",
-    backgroundColor: "black",
+    backgroundColor: "#274C43",
   },
 });
 
 let boxSx = {
-  // height: 300,
-  // width: 300,
+  height: 250,
   marginTop: 0,
   borderRadius: 5,
-  boxShadow: 10,
+  boxShadow: 5,
   "&:hover": {
-    border: "2px  solid #FDB275",
+    border: "2px  solid #274C43",
   },
 };
 
+
+
 function NoteCard({ title, body, created }) {
+
+
+  const formattedDate = () =>{
+    return (
+      <div>{moment(created).format("Do MMMM YYYY")}</div>
+    )
+  };
+  
+
+
   return (
     <Box sx={boxSx}>
-      <CardActionArea>
-        <Card sx={{borderRadius:5}} >
+      <CardActionArea >
+        <Card sx={{borderRadius:5, height:"250px", borderColor: "greenyellow"}} >
           <CardHeader
             action={
               <IconButtonSx color="red">
@@ -44,7 +56,7 @@ function NoteCard({ title, body, created }) {
               </IconButtonSx>
             }
             title={title}
-            subheader={created}
+            subheader={formattedDate()}
           />
           <CardContent>
             <Typography variant="body2" color="textSecondary">

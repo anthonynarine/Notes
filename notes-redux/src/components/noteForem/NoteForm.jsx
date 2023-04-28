@@ -14,13 +14,13 @@ import { FieldError } from "../FieldError/fieldError";
 
 const pageStyles = {
   btn: {
-    backgroundColor: "#FF3F00",
-    color: "white",
+    backgroundColor: "#274C43",
+    color: "#D8CCBD",
     width: "60%",
     marginBottom: 1,
     borderRadius: 3,
     "&:hover": {
-      backgroundColor: "#FF3F00",
+      backgroundColor: "#589F7E",
     },
   },
 };
@@ -55,7 +55,7 @@ function NoteForm({
 
   //state to hold errors
   const [formErrors, setFormErrors] = useState({
-  // if we have the note.title we send an undefined so we dont get an error
+    // if we have the note.title we send an undefined so we dont get an error
     title: note?.title ? undefined : true,
     body: note?.body ? undefined : true,
   });
@@ -84,8 +84,13 @@ function NoteForm({
   const actionIcons = (
     <div>
       {/* edit and delete icons will only be shown if the event is sent via props. */}
-      <div>{onClickEdit && <Create onClick={onClickEdit} />}</div>
-      <div>{onClickDelete && <Delete onClick={onClickDelete} />}</div>
+      <div>
+        {onClickEdit && (
+          <Create onClick={onClickEdit} sx={{cursor: "pointer" }} />
+        )}
+        {onClickDelete && <Delete onClick={onClickDelete} sx={{marginLeft: 5, cursor: "pointer"}} />}
+      </div>
+      <div></div>
     </div>
   );
 
@@ -153,7 +158,9 @@ function NoteForm({
               xs={12}
             >
               <Grid item sx={8}>
-                <Typography variant="h6">{isEditable ? title : "edit note"}</Typography>
+                <Typography variant="h6">
+                  {isEditable ? "Edit note" : title}
+                </Typography>
               </Grid>
               <Grid item sx={4}>
                 {actionIcons}
