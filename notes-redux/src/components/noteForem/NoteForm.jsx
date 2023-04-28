@@ -7,14 +7,14 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import { Create, Delete } from "@mui/icons-material";
+import { Create, Delete, Tune } from "@mui/icons-material";
 import { useState } from "react";
 import { ValidatorService } from "../../services/validator";
 import { FieldError } from "../FieldError/fieldError";
 
 const pageStyles = {
   btn: {
-    backgroundColor: "black",
+    backgroundColor: "#FF3F00",
     color: "white",
     width: "60%",
     marginBottom: 1,
@@ -38,14 +38,26 @@ const VALIDATOR = {
 // console.log(VALIDATOR.title("he")) //testing VALIDATOR min
 // console.log(VALIDATOR.title("helloooooooooooooooooooooo")) //testing VALIDATOR max
 
-function NoteForm({ title, onClickEdit, onClickDelete, onSubmit }) {
+function NoteForm({
+  isEditable = true,
+  note,
+  title,
+  onClickEdit,
+  onClickDelete,
+  onSubmit,
+}) {
   //state to hold form value state
-  const [formValues, setFormValues] = useState({ title: "", body: "" });
+  const [formValues, setFormValues] = useState({
+    title: note?.title,
+    body: note?.body,
+  });
+  //since the note title can be undefined the ? is use as a test
 
   //state to hold errors
   const [formErrors, setFormErrors] = useState({
-    title: undefined,
-    body: undefined,
+  // if we have the note.title we send an undefined so we dont get an error
+    title: note?.title ? undefined : true,
+    body: note?.body ? undefined : true,
   });
 
   const updateFormValues = (event) => {
@@ -61,20 +73,20 @@ function NoteForm({ title, onClickEdit, onClickDelete, onSubmit }) {
   };
 
   const hasError = () => {
-    for (const id in formErrors){
-      if(formErrors[id]){
-        return true
+    for (const id in formErrors) {
+      if (formErrors[id]) {
+        return true;
       }
     }
-    return false
-  }
+    return false;
+  };
 
   const actionIcons = (
-    <>
+    <div>
       {/* edit and delete icons will only be shown if the event is sent via props. */}
-      <div>{onClickEdit && <Create />}</div>
-      <div>{onClickDelete && <Delete />}</div>
-    </>
+      <div>{onClickEdit && <Create onClick={onClickEdit} />}</div>
+      <div>{onClickDelete && <Delete onClick={onClickDelete} />}</div>
+    </div>
   );
 
   const titleInput = (
@@ -86,6 +98,7 @@ function NoteForm({ title, onClickEdit, onClickDelete, onSubmit }) {
         id="title"
         label="Title"
         variant="outlined"
+        value={formValues.title}
       />
       <div>
         <FieldError message={formErrors.title} />
@@ -104,6 +117,7 @@ function NoteForm({ title, onClickEdit, onClickDelete, onSubmit }) {
         id="body"
         label="Body"
         variant="outlined"
+        value={formValues.body}
       />
       <div>
         <FieldError message={formErrors.body} />
@@ -112,39 +126,40 @@ function NoteForm({ title, onClickEdit, onClickDelete, onSubmit }) {
   );
 
   const submitBtn = (
-    <>
-      <Button disabled={hasError()} onClick={() => onSubmit(formValues)} sx={pageStyles.btn}>
+    <div>
+      <Button
+        disabled={hasError()}
+        onClick={() => onSubmit(formValues)}
+        sx={pageStyles.btn}
+      >
         Submit
       </Button>
-    </>
+    </div>
   );
-
-
-
 
   return (
     <Container>
       <Paper elevation={15} sx={{ marginTop: "50px", paddingBottom: "1px" }}>
-        <Grid container justifyContent="center" marginTop="50px">
-          <Grid
-            container
-            spacing={1}
-            justifyContent="space-between"
-            marginBottom="40px"
-            marginTop="25px"
-            marginLeft="50px"
-            marginRight="50px"
-            xs={12}
-          >
-            <Grid item sx={8}>
-              <Typography variant="h6">New note</Typography>
-            </Grid>
-            <Grid item sx={4}>
-              {actionIcons}
+        <form>
+          <Grid container justifyContent="center" marginTop="50px">
+            <Grid
+              container
+              spacing={1}
+              justifyContent="space-between"
+              marginBottom="40px"
+              marginTop="25px"
+              marginLeft="50px"
+              marginRight="50px"
+              xs={12}
+            >
+              <Grid item sx={8}>
+                <Typography variant="h6">{isEditable ? title : "edit note"}</Typography>
+              </Grid>
+              <Grid item sx={4}>
+                {actionIcons}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        <form>
           <Grid
             xs={6}
             item
@@ -152,7 +167,7 @@ function NoteForm({ title, onClickEdit, onClickDelete, onSubmit }) {
             marginLeft="50px"
             marginBottom="30px"
           >
-            {titleInput}
+            {isEditable && titleInput}
           </Grid>
           <Grid
             xs={12}
@@ -161,7 +176,7 @@ function NoteForm({ title, onClickEdit, onClickDelete, onSubmit }) {
             marginLeft="50px"
             marginRight="50px"
           >
-            {contentInput}
+            {isEditable ? contentInput : note.body}
           </Grid>
         </form>
         <Grid

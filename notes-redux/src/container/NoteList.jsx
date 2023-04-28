@@ -2,7 +2,7 @@ import { Container, Grid, Paper } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import NoteCard from "../components/NoteCard";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, } from "react-router-dom";
 
 function NoteList(props) {
   //to access noteList from store

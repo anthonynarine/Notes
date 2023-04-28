@@ -19,7 +19,7 @@ root.render(
 {/* app component will wrap all other routes here */}
           <Route path="/" element={<App />}>
             <Route path="/" element={<NoteBrowse />} />
-            <Route path="/note/:id" element={<Note />} />
+            <Route path="/note/:noteId" element={<Note />} />
             <Route path="/note/add" element={<NoteCreate />} />
             <Route path="*" element={<ErrorPage />} />
           </Route>
